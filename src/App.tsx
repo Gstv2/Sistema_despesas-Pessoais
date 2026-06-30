@@ -1,7 +1,9 @@
-export default function App() {
+function App() {
   return (
-    <div className="App">
-      <h1>Hello, World!</h1>
+    <div>
+      <h1>Sistema de Controle de Despesas Pessoais</h1>
     </div>
   );
 }
+
+export default App;

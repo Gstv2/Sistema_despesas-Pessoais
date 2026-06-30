@@ -26,12 +26,12 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Configure project dependencies (install React, Vite, TypeScript, Tailwind CSS, React Router DOM, Zod, React Hook Form, Supabase, Recharts, Lucide React)
-- [ ] T002 [P] Initialize project structure (create src/assets, src/components, src/features, src/hooks, src/lib, src/pages, src/routes, src/services, src/types, src/utils directories)
-- [ ] T003 [P] Configure Tailwind CSS in vite.config.ts and index.css
-- [ ] T004 [P] Create .env.local with Supabase URL and anon key
-- [ ] T005 [P] Configure ESLint and Prettier
-- [ ] T006 [P] Initialize Supabase client in src/lib/supabase.ts
+- [X] T001 Configure project dependencies (install React, Vite, TypeScript, Tailwind CSS, React Router DOM, Zod, React Hook Form, Supabase, Recharts, Lucide React)
+- [X] T002 [P] Initialize project structure (create src/assets, src/components, src/features, src/hooks, src/lib, src/pages, src/routes, src/services, src/types, src/utils directories)
+- [X] T003 [P] Configure Tailwind CSS in vite.config.ts and index.css
+- [X] T004 [P] Create .env.local with Supabase URL and anon key
+- [X] T005 [P] Configure ESLint and Prettier
+- [X] T006 [P] Initialize Supabase client in src/lib/supabase.ts
 
 ---
 
