@@ -80,11 +80,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Create Dashboard feature components (SummaryCards) in src/features/dashboard/
-- [ ] T021 [P] [US2] Create Dashboard page in src/pages/DashboardPage.tsx
-- [ ] T022 [US2] Integrate Dashboard page with routes in src/routes/index.tsx
-- [ ] T023 [US2] Implement calculation of total income, total expenses, and balance in src/hooks/useDashboard.ts
-- [ ] T024 [US2] Display SummaryCards on DashboardPage with calculated values
+- [X] T020 [P] [US2] Create Dashboard feature components (SummaryCards) in src/features/dashboard/
+- [X] T021 [P] [US2] Create Dashboard page in src/pages/DashboardPage.tsx
+- [X] T022 [US2] Integrate Dashboard page with routes in src/routes/index.tsx
+- [X] T023 [US2] Implement calculation of total income, total expenses, and balance in src/hooks/useDashboard.ts
+- [X] T024 [US2] Display SummaryCards on DashboardPage with calculated values
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
