@@ -41,12 +41,12 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T007 Create Transaction types in src/types/transaction.ts
-- [ ] T008 [P] Create Zod schema for Transaction validation in src/lib/validators.ts
-- [ ] T009 [P] Create Supabase service for Transaction CRUD in src/services/transactionService.ts
-- [ ] T010 Create basic layout components (Navbar, Sidebar) in src/components/layout/
-- [ ] T011 Configure React Router DOM routes in src/routes/index.tsx
-- [ ] T012 Create utility functions (currency formatter, date formatter) in src/utils/
+- [X] T007 Create Transaction types in src/types/transaction.ts
+- [X] T008 [P] Create Zod schema for Transaction validation in src/lib/validators.ts
+- [X] T009 [P] Create Supabase service for Transaction CRUD in src/services/transactionService.ts
+- [X] T010 Create basic layout components (Navbar, Sidebar) in src/components/layout/
+- [X] T011 Configure React Router DOM routes in src/routes/index.tsx
+- [X] T012 Create utility functions (currency formatter, date formatter) in src/utils/
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
