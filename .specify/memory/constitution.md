@@ -1,50 +1,187 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
 
-## Core Principles
+# Constituição do Projeto - Sistema de Controle de Despesas Pessoais
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+## Objetivo
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Desenvolver um sistema simples, confiável e intuitivo para auxiliar usuários no controle de receitas e despesas, fornecendo informações claras para uma melhor tomada de decisão financeira.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+---
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+# Princípios Fundamentais
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+## 1. Simplicidade acima da complexidade
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Toda funcionalidade deve ser fácil de compreender e utilizar.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+Se existir mais de uma solução, será escolhida aquela que:
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- possuir menor complexidade;
+- for mais legível;
+- facilitar manutenção futura.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+Nunca adicionar funcionalidades desnecessárias.
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+---
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+## 2. Código limpo
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+Todo código deverá seguir os princípios de Clean Code.
+
+Isso inclui:
+
+- nomes descritivos;
+- funções pequenas;
+- responsabilidade única;
+- evitar duplicação;
+- evitar comentários desnecessários;
+- organização consistente dos arquivos.
+
+---
+
+## 3. Organização do projeto
+
+Cada responsabilidade deverá possuir seu próprio módulo.
+
+Exemplo:
+
+- Front-end
+- Back-end
+- Banco de Dados
+- Serviços
+- Componentes
+- Utilidades
+
+Não misturar responsabilidades.
+
+---
+
+## 4. Experiência do usuário
+
+A interface deverá ser:
+
+- intuitiva;
+- responsiva;
+- rápida;
+- acessível.
+
+O usuário deve conseguir registrar uma movimentação em poucos passos.
+
+---
+
+## 5. Dados confiáveis
+
+Nunca permitir inconsistências.
+
+Exemplos:
+
+- valores negativos quando não fizer sentido;
+- datas inválidas;
+- categorias inexistentes;
+- registros incompletos.
+
+Toda entrada deverá ser validada.
+
+---
+
+## 6. Segurança
+
+Informações financeiras são sensíveis.
+
+Sempre:
+
+- validar entradas;
+- proteger dados pessoais;
+- evitar exposição de informações;
+- seguir boas práticas de autenticação caso exista login.
+
+Nunca confiar em dados enviados pelo cliente.
+
+---
+
+## 7. Escalabilidade
+
+O sistema deverá permitir crescimento futuro.
+
+Novas funcionalidades deverão ser adicionadas sem grandes alterações na arquitetura existente.
+
+---
+
+## 8. Performance
+
+Evitar processamento desnecessário.
+
+Sempre buscar:
+
+- consultas eficientes;
+- carregamento rápido;
+- reutilização de componentes;
+- otimização quando necessário.
+
+---
+
+## 9. Versionamento
+
+Cada alteração deverá:
+
+- possuir um objetivo claro;
+- ser pequena;
+- ser facilmente reversível.
+
+Commits deverão seguir um padrão.
+
+Exemplo:
+
+feat:
+fix:
+refactor:
+docs:
+test:
+style:
+chore:
+
+---
+
+## 10. Testabilidade
+
+Sempre que possível:
+
+- separar regras de negócio da interface;
+- escrever código fácil de testar;
+- evitar dependências desnecessárias.
+
+---
+
+# Regras para a IA
+
+Durante todo o desenvolvimento, a IA deverá:
+
+- nunca criar código duplicado;
+- explicar decisões arquiteturais quando solicitado;
+- sugerir melhorias quando identificar problemas;
+- preservar compatibilidade com funcionalidades existentes;
+- priorizar legibilidade em vez de soluções extremamente sofisticadas;
+- manter consistência entre arquivos e padrões do projeto;
+- respeitar esta constituição em todas as respostas.
+
+---
+
+# Critérios de Qualidade
+
+Uma funcionalidade só será considerada concluída quando:
+
+- funcionar corretamente;
+- possuir código organizado;
+- seguir esta constituição;
+- não introduzir erros em funcionalidades existentes;
+- possuir estrutura preparada para manutenção futura.
+
+---
+
+# Missão do Projeto
+
+Criar uma aplicação confiável que ajude pessoas a compreenderem melhor sua vida financeira através de uma experiência simples, organizada e segura.
+
+---
+
+**Version**: 1.0.0 | **Ratified**: 2026-06-30 | **Last Amended**: 2026-06-30
+
