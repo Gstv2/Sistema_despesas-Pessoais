@@ -60,13 +60,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T013 [P] [US1] Create Income feature components (IncomeForm, IncomeList) in src/features/income/
-- [ ] T014 [P] [US1] Create Expense feature components (ExpenseForm, ExpenseList) in src/features/expenses/
-- [ ] T015 [P] [US1] Create Income page in src/pages/IncomePage.tsx
-- [ ] T016 [P] [US1] Create Expense page in src/pages/ExpensePage.tsx
-- [ ] T017 [US1] Integrate Income and Expense pages with routes in src/routes/index.tsx
-- [ ] T018 [US1] Add validation using Zod and React Hook Form to forms
-- [ ] T019 [US1] Implement create, edit, and delete functionality using transactionService
+- [X] T013 [P] [US1] Create Income feature components (IncomeForm, IncomeList) in src/features/income/
+- [X] T014 [P] [US1] Create Expense feature components (ExpenseForm, ExpenseList) in src/features/expenses/
+- [X] T015 [P] [US1] Create Income page in src/pages/IncomePage.tsx
+- [X] T016 [P] [US1] Create Expense page in src/pages/ExpensePage.tsx
+- [X] T017 [US1] Integrate Income and Expense pages with routes in src/routes/index.tsx
+- [X] T018 [US1] Add validation using Zod and React Hook Form to forms
+- [X] T019 [US1] Implement create, edit, and delete functionality using transactionService
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
