@@ -98,11 +98,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T025 [P] [US3] Create History feature components (TransactionList, FilterForm) in src/features/history/
-- [ ] T026 [P] [US3] Create History page in src/pages/HistoryPage.tsx
-- [ ] T027 [US3] Integrate History page with routes in src/routes/index.tsx
-- [ ] T028 [US3] Implement filtering logic in src/hooks/useTransactions.ts
-- [ ] T029 [US3] Add FilterForm to HistoryPage and connect to filtering logic
+- [X] T025 [P] [US3] Create History feature components (TransactionList, FilterForm) in src/features/history/
+- [X] T026 [P] [US3] Create History page in src/pages/HistoryPage.tsx
+- [X] T027 [US3] Integrate History page with routes in src/routes/index.tsx
+- [X] T028 [US3] Implement filtering logic in src/hooks/useTransactions.ts
+- [X] T029 [US3] Add FilterForm to HistoryPage and connect to filtering logic
 
 **Checkpoint**: All user stories should now be independently functional
 
