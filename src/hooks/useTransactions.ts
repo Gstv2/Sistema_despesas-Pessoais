@@ -14,6 +14,7 @@ export const useTransactions = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadTransactions();
@@ -25,10 +26,12 @@ export const useTransactions = () => {
 
   const loadTransactions = async () => {
     try {
+      setError(null);
       const data = await transactionService.getAll();
       setTransactions(data);
-    } catch (error) {
-      console.error('Error loading transactions:', error);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao carregar as movimentações');
+      console.error('Error loading transactions:', err);
     } finally {
       setLoading(false);
     }
@@ -67,6 +70,7 @@ export const useTransactions = () => {
   return {
     transactions: filteredTransactions,
     loading,
+    error,
     applyFilters,
     refresh: loadTransactions,
   };

@@ -128,12 +128,12 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T035 [P] Add responsive design to all pages and components
-- [ ] T036 Add loading states to async operations
-- [ ] T037 [P] Add error handling to all pages and components
-- [ ] T038 [P] Update App.tsx to use layout components
-- [ ] T039 Run quickstart.md validation
-- [ ] T040 Code cleanup and refactoring
+- [X] T035 [P] Add responsive design to all pages and components
+- [X] T036 Add loading states to async operations
+- [X] T037 [P] Add error handling to all pages and components
+- [X] T038 [P] Update App.tsx to use layout components
+- [X] T039 Run quickstart.md validation
+- [X] T040 Code cleanup and refactoring
 
 ---
 

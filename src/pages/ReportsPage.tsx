@@ -2,9 +2,10 @@ import { useTransactions } from '../hooks/useTransactions';
 import CategoryPieChart from '../features/reports/CategoryPieChart';
 import IncomeExpenseBarChart from '../features/reports/IncomeExpenseBarChart';
 import MonthlyEvolutionChart from '../features/reports/MonthlyEvolutionChart';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const ReportsPage = () => {
-  const { transactions, loading } = useTransactions();
+  const { transactions, loading, error } = useTransactions();
 
   if (loading) {
     return (
@@ -18,6 +19,7 @@ const ReportsPage = () => {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-800">Relatórios</h1>
+      {error && <ErrorMessage message={error} />}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <CategoryPieChart transactions={transactions} />
         <IncomeExpenseBarChart transactions={transactions} />

@@ -3,10 +3,11 @@ import FilterForm from '../features/history/FilterForm';
 import TransactionList from '../features/history/TransactionList';
 import { useTransactions } from '../hooks/useTransactions';
 import { transactionService } from '../services/transactionService';
+import ErrorMessage from '../components/ui/ErrorMessage';
 import type { Transaction } from '../types/transaction';
 
 const HistoryPage = () => {
-  const { transactions, loading, applyFilters, refresh } = useTransactions();
+  const { transactions, loading, error, applyFilters, refresh } = useTransactions();
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   const handleDelete = async (id: string) => {
@@ -32,6 +33,7 @@ const HistoryPage = () => {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-800">Histórico</h1>
+      {error && <ErrorMessage message={error} />}
       <FilterForm onFilter={applyFilters} />
 
       {loading ? (

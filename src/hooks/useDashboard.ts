@@ -5,6 +5,7 @@ import type { Transaction } from '../types/transaction';
 export const useDashboard = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadTransactions();
@@ -12,10 +13,12 @@ export const useDashboard = () => {
 
   const loadTransactions = async () => {
     try {
+      setError(null);
       const data = await transactionService.getAll();
       setTransactions(data);
-    } catch (error) {
-      console.error('Error loading transactions:', error);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao carregar as movimentações');
+      console.error('Error loading transactions:', err);
     } finally {
       setLoading(false);
     }
@@ -35,6 +38,7 @@ export const useDashboard = () => {
     totalExpenses,
     totalTransactions: transactions.length,
     loading,
+    error,
     refresh: loadTransactions,
   };
 };

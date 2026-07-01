@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react';
 import ExpenseForm from '../features/expenses/ExpenseForm';
 import ExpenseList from '../features/expenses/ExpenseList';
 import { transactionService } from '../services/transactionService';
+import ErrorMessage from '../components/ui/ErrorMessage';
 import type { Transaction, CreateTransaction, UpdateTransaction } from '../types/transaction';
 
 const ExpensePage = () => {
@@ -10,6 +11,7 @@ const ExpensePage = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadExpenses();
@@ -17,10 +19,12 @@ const ExpensePage = () => {
 
   const loadExpenses = async () => {
     try {
+      setError(null);
       const data = await transactionService.getAll();
       setExpenses(data.filter(t => t.type === 'expense'));
-    } catch (error) {
-      console.error('Error loading expenses:', error);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao carregar as despesas');
+      console.error('Error loading expenses:', err);
     } finally {
       setLoading(false);
     }
@@ -28,11 +32,13 @@ const ExpensePage = () => {
 
   const handleCreateExpense = async (data: CreateTransaction) => {
     try {
+      setError(null);
       await transactionService.create({ ...data, type: 'expense' });
       await loadExpenses();
       setShowForm(false);
-    } catch (error) {
-      console.error('Error creating expense:', error);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao criar a despesa');
+      console.error('Error creating expense:', err);
     }
   };
 
@@ -44,22 +50,26 @@ const ExpensePage = () => {
   const handleUpdateExpense = async (data: UpdateTransaction) => {
     if (!editingTransaction) return;
     try {
+      setError(null);
       await transactionService.update(editingTransaction.id, data);
       await loadExpenses();
       setShowForm(false);
       setEditingTransaction(null);
-    } catch (error) {
-      console.error('Error updating expense:', error);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao atualizar a despesa');
+      console.error('Error updating expense:', err);
     }
   };
 
   const handleDeleteExpense = async (id: string) => {
     if (!confirm('Deseja excluir esta despesa?')) return;
     try {
+      setError(null);
       await transactionService.delete(id);
       await loadExpenses();
-    } catch (error) {
-      console.error('Error deleting expense:', error);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao excluir a despesa');
+      console.error('Error deleting expense:', err);
     }
   };
 
@@ -76,9 +86,11 @@ const ExpensePage = () => {
         </button>
       </div>
 
+      {error && <ErrorMessage message={error} />}
+
       {showForm && (
         <ExpenseForm
-          transaction={editingTransaction}
+          transaction={editingTransaction || undefined}
           onSubmit={editingTransaction ? handleUpdateExpense : handleCreateExpense}
           onCancel={() => {
             setShowForm(false);
