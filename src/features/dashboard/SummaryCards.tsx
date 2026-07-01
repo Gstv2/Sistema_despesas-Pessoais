@@ -16,7 +16,7 @@ const SummaryCards = ({ totalIncome, totalExpenses, totalTransactions }: Summary
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-500">Saldo</p>
-            <p className={`text-2xl font-bold mt-1">{formatCurrency(balance)}</p>
+            <p className="text-2xl font-bold mt-1">{formatCurrency(balance)}</p>
           </div>
           <div className="bg-green-100 p-3 rounded-full">
             <DollarSign className="text-green-600" />

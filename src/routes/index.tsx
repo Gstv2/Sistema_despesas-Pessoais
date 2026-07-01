@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import Layout from '../components/layout/Layout';
 import DashboardPage from '../pages/DashboardPage';
 import IncomePage from '../pages/IncomePage';
 import ExpensePage from '../pages/ExpensePage';
@@ -7,23 +8,28 @@ import ReportsPage from '../pages/ReportsPage';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <DashboardPage />,
-  },
-  {
-    path: '/income',
-    element: <IncomePage />,
-  },
-  {
-    path: '/expenses',
-    element: <ExpensePage />,
-  },
-  {
-    path: '/history',
-    element: <HistoryPage />,
-  },
-  {
-    path: '/reports',
-    element: <ReportsPage />,
+    element: <Layout />,
+    children: [
+      {
+        path: '/',
+        element: <DashboardPage />,
+      },
+      {
+        path: '/income',
+        element: <IncomePage />,
+      },
+      {
+        path: '/expenses',
+        element: <ExpensePage />,
+      },
+      {
+        path: '/history',
+        element: <HistoryPage />,
+      },
+      {
+        path: '/reports',
+        element: <ReportsPage />,
+      },
+    ],
   },
 ]);
