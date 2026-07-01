@@ -1,7 +1,7 @@
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createTransactionSchema } from '../../lib/validators';
-import type { CreateTransaction, TransactionType, TransactionCategory, Transaction } from '../../types/transaction';
+import type { CreateTransaction, TransactionCategory, Transaction } from '../../types/transaction';
 
 interface ExpenseFormProps {
   onSubmit: (data: CreateTransaction) => void;

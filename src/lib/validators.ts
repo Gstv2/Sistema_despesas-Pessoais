@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import type { TransactionCategory, TransactionType } from '../types/transaction';
 
 const transactionTypeSchema = z.enum(['income', 'expense']);
 

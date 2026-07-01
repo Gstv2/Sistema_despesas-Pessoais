@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import FilterForm from '../features/history/FilterForm';
 import TransactionList from '../features/history/TransactionList';
 import { useTransactions } from '../hooks/useTransactions';
@@ -8,7 +8,6 @@ import type { Transaction } from '../types/transaction';
 
 const HistoryPage = () => {
   const { transactions, loading, error, applyFilters, refresh } = useTransactions();
-  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   const handleDelete = async (id: string) => {
     if (!confirm('Deseja excluir esta movimentação?')) return;
@@ -21,7 +20,6 @@ const HistoryPage = () => {
   };
 
   const handleEdit = (transaction: Transaction) => {
-    setEditingTransaction(transaction);
     // Redirect to the respective page for editing
     if (transaction.type === 'income') {
       window.location.href = `/income?edit=${transaction.id}`;

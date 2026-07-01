@@ -1,4 +1,4 @@
-import { Edit2, Trash2, DollarSign } from 'lucide-react';
+import { Edit2, Trash2 } from 'lucide-react';
 import { formatCurrency, formatDate } from '../../utils/formatters';
 import type { Transaction } from '../../types/transaction';
 
