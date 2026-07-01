@@ -1,6 +1,6 @@
 export type TransactionType = 'income' | 'expense';
 
-export type TransactionCategory =
+export type TransactionCategory = 
   | 'Alimentação'
   | 'Transporte'
   | 'Moradia'
@@ -18,18 +18,18 @@ export interface Transaction {
   category: TransactionCategory;
   description?: string;
   payment_method?: string;
-  transaction_date: Date;
-  created_at: Date;
-  updated_at: Date;
+  transaction_date: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface CreateTransaction {
-  type: TransactionType;
+  type?: TransactionType;
   value: number;
   category: TransactionCategory;
   description?: string;
   payment_method?: string;
-  transaction_date: Date;
+  transaction_date: string;
 }
 
 export interface UpdateTransaction {
@@ -38,5 +38,5 @@ export interface UpdateTransaction {
   category?: TransactionCategory;
   description?: string;
   payment_method?: string;
-  transaction_date?: Date;
+  transaction_date?: string;
 }

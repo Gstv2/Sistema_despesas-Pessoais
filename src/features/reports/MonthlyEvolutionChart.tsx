@@ -7,59 +7,45 @@ interface MonthlyEvolutionChartProps {
 
 const MonthlyEvolutionChart = ({ transactions }: MonthlyEvolutionChartProps) => {
   const monthlyData = transactions.reduce((acc, t) => {
-    const date = new Date(t.transaction_date);
-    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-    const monthName = date.toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' });
-
-    const existing = acc.find(item => item.month === monthKey);
+    const date = new Date(t.transactionDate);
+    const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    const existing = acc.find(item => item.month === month);
+    
     if (existing) {
-      if (t.type === 'income') {
-        existing.income += t.value;
-      } else {
-        existing.expense += t.value;
-      }
+      if (t.type === 'income') existing.income += t.value;
+      else existing.expense += t.value;
     } else {
       acc.push({
-        month: monthKey,
-        name: monthName,
+        month,
         income: t.type === 'income' ? t.value : 0,
         expense: t.type === 'expense' ? t.value : 0,
-        balance: t.type === 'income' ? t.value : -t.value,
       });
     }
     return acc;
-  }, [] as { month: string; name: string; income: number; expense: number; balance: number }[]);
+  }, [] as Array<{ month: string; income: number; expense: number }>).sort((a, b) => a.month.localeCompare(b.month));
 
-  // Calculate cumulative balance
-  let cumulativeBalance = 0;
-  const dataWithBalance = monthlyData
-    .sort((a, b) => a.month.localeCompare(b.month))
-    .map(item => {
-      cumulativeBalance += item.income - item.expense;
-      return { ...item, balance: cumulativeBalance };
-    });
-
-  if (dataWithBalance.length === 0) {
-    return (
-      <div className="bg-white p-6 rounded-lg shadow-md text-center">
-        <p className="text-gray-500">Nenhuma movimentação para exibir</p>
-      </div>
-    );
-  }
+  const dataWithBalance = monthlyData.map(item => ({
+    ...item,
+    balance: item.income - item.expense,
+  }));
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h3 className="text-lg font-bold mb-4">Evolução do Saldo</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={dataWithBalance}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip formatter={(value) => `R$ ${Number(value).toFixed(2)}`} />
-          <Legend />
-          <Line type="monotone" dataKey="balance" stroke="#8884d8" name="Saldo" strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 6 }} />
-        </LineChart>
-      </ResponsiveContainer>
+    <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-100">
+      <h3 className="text-xl font-bold text-slate-800 mb-6">Evolução Mensal do Saldo</h3>
+      <div className="h-80">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={dataWithBalance}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip formatter={(value: number) => `R$ ${value.toFixed(2)}`} />
+            <Legend />
+            <Line type="monotone" dataKey="balance" stroke="#8884d8" name="Saldo" strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+            <Line type="monotone" dataKey="income" stroke="#10b981" name="Receitas" strokeWidth={2} dot={{ r: 4 }} />
+            <Line type="monotone" dataKey="expense" stroke="#f43f5e" name="Despesas" strokeWidth={2} dot={{ r: 4 }} />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };
