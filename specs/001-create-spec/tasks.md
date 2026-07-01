@@ -116,11 +116,11 @@
 
 ### Implementation for User Story 4
 
-- [ ] T030 [P] [US4] Create Reports feature components (CategoryPieChart, IncomeExpenseBarChart, MonthlyEvolutionChart) in src/features/reports/
-- [ ] T031 [P] [US4] Create Reports page in src/pages/ReportsPage.tsx
-- [ ] T032 [US4] Integrate Reports page with routes in src/routes/index.tsx
-- [ ] T033 [US4] Implement data preparation for charts in src/hooks/useReports.ts
-- [ ] T034 [US4] Display charts on ReportsPage using Recharts
+- [X] T030 [P] [US4] Create Reports feature components (CategoryPieChart, IncomeExpenseBarChart, MonthlyEvolutionChart) in src/features/reports/
+- [X] T031 [P] [US4] Create Reports page in src/pages/ReportsPage.tsx
+- [X] T032 [US4] Integrate Reports page with routes in src/routes/index.tsx
+- [X] T033 [US4] Implement data preparation for charts in src/hooks/useReports.ts
+- [X] T034 [US4] Display charts on ReportsPage using Recharts
 
 ---
 
