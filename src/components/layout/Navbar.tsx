@@ -1,49 +1,19 @@
-import { Home, DollarSign, TrendingUp, FileText } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Wallet2 } from 'lucide-react';
 
 const Navbar = () => {
   return (
-    <nav className="bg-white shadow-md p-4">
-      <div className="container mx-auto flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-800">
-          Sistema de Controle de Despesas
-        </h1>
-        <div className="flex space-x-4">
-          <Link
-            to="/"
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
-          >
-            <Home size={20} />
-            <span>Dashboard</span>
-          </Link>
-          <Link
-            to="/income"
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
-          >
-            <DollarSign size={20} />
-            <span>Receitas</span>
-          </Link>
-          <Link
-            to="/expenses"
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
-          >
-            <TrendingUp size={20} />
-            <span>Despesas</span>
-          </Link>
-          <Link
-            to="/history"
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
-          >
-            <FileText size={20} />
-            <span>Histórico</span>
-          </Link>
-          <Link
-            to="/reports"
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
-          >
-            <FileText size={20} />
-            <span>Relatórios</span>
-          </Link>
+    <nav className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-2xl sticky top-0 z-30">
+      <div className="container mx-auto px-4 py-5">
+        <div className="flex items-center gap-3">
+          <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-sm">
+            <Wallet2 className="text-white" size={32} />
+          </div>
+          <div>
+            <h1 className="text-xl md:text-2xl font-extrabold text-white tracking-tight">
+              Finanças Pessoais
+            </h1>
+            <p className="text-blue-100 text-xs md:text-sm font-medium">Controle suas despesas e receitas</p>
+          </div>
         </div>
       </div>
     </nav>

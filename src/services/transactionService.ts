@@ -1,88 +1,111 @@
 import { supabase } from '../lib/supabase';
-import type {
-  Transaction,
-  CreateTransaction,
-  UpdateTransaction,
-} from '../types/transaction';
+import type { Transaction, CreateTransaction, UpdateTransaction } from '../types/transaction';
 
-export const transactionService = {
-  async getAll(): Promise<Transaction[]> {
-    const { data, error } = await supabase
-      .from('transactions')
-      .select('*')
-      .order('transaction_date', { ascending: false });
-
-    if (error) throw error;
-
-    return data?.map(
-      (item) =>
-        ({
-          ...item,
-          transaction_date: new Date(item.transaction_date),
-          created_at: new Date(item.created_at),
-          updated_at: new Date(item.updated_at),
-        } as Transaction)
-    );
+// Mock data for development without Supabase
+const mockTransactions: Transaction[] = [
+  {
+    id: '1',
+    type: 'income',
+    value: 5000,
+    category: 'Salário',
+    description: 'Salário mensal',
+    payment_method: 'Transferência',
+    transaction_date: new Date().toISOString().split('T')[0],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   },
-
-  async getById(id: string): Promise<Transaction> {
-    const { data, error } = await supabase
-      .from('transactions')
-      .select('*')
-      .eq('id', id)
-      .single();
-
-    if (error) throw error;
-
-    return {
-      ...data,
-      transaction_date: new Date(data.transaction_date),
-      created_at: new Date(data.created_at),
-      updated_at: new Date(data.updated_at),
-    } as Transaction;
+  {
+    id: '2',
+    type: 'expense',
+    value: 1200,
+    category: 'Moradia',
+    description: 'Aluguel apartamento',
+    payment_method: 'Boleto',
+    transaction_date: new Date().toISOString().split('T')[0],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   },
+];
 
-  async create(transaction: CreateTransaction): Promise<Transaction> {
-    const { data, error } = await supabase
-      .from('transactions')
-      .insert(transaction)
-      .select('*')
-      .single();
+const useMockData = !import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === 'your-supabase-url';
 
-    if (error) throw error;
+export const getAll = async (): Promise<Transaction[]> => {
+  if (useMockData) {
+    return mockTransactions;
+  }
 
-    return {
-      ...data,
-      transaction_date: new Date(data.transaction_date),
-      created_at: new Date(data.created_at),
-      updated_at: new Date(data.updated_at),
-    } as Transaction;
-  },
+  const { data, error } = await supabase
+    .from('transactions')
+    .select('*')
+    .order('transaction_date', { ascending: false });
 
-  async update(id: string, transaction: UpdateTransaction): Promise<Transaction> {
-    const { data, error } = await supabase
-      .from('transactions')
-      .update(transaction)
-      .eq('id', id)
-      .select('*')
-      .single();
-
-    if (error) throw error;
-
-    return {
-      ...data,
-      transaction_date: new Date(data.transaction_date),
-      created_at: new Date(data.created_at),
-      updated_at: new Date(data.updated_at),
-    } as Transaction;
-  },
-
-  async delete(id: string): Promise<void> {
-    const { error } = await supabase
-      .from('transactions')
-      .delete()
-      .eq('id', id);
-
-    if (error) throw error;
-  },
+  if (error) throw error;
+  return data as Transaction[];
 };
+
+export const create = async (transaction: CreateTransaction): Promise<Transaction> => {
+  if (useMockData) {
+    const newTransaction: Transaction = {
+      ...transaction,
+      id: Date.now().toString(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    } as Transaction;
+    mockTransactions.unshift(newTransaction);
+    return newTransaction;
+  }
+
+  const { data, error } = await supabase
+    .from('transactions')
+    .insert([transaction])
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as Transaction;
+};
+
+export const update = async (id: string, transaction: UpdateTransaction): Promise<Transaction> => {
+  if (useMockData) {
+    const index = mockTransactions.findIndex(t => t.id === id);
+    if (index !== -1) {
+      mockTransactions[index] = {
+        ...mockTransactions[index],
+        ...transaction,
+        updated_at: new Date().toISOString(),
+      };
+      return mockTransactions[index];
+    }
+    throw new Error('Transaction not found');
+  }
+
+  const { data, error } = await supabase
+    .from('transactions')
+    .update({ ...transaction, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as Transaction;
+};
+
+export const deleteTransaction = async (id: string): Promise<void> => {
+  if (useMockData) {
+    const index = mockTransactions.findIndex(t => t.id === id);
+    if (index !== -1) {
+      mockTransactions.splice(index, 1);
+    }
+    return;
+  }
+
+  const { error } = await supabase
+    .from('transactions')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+};
+
+// Use deleteTransaction instead of delete to avoid conflict with reserved keyword
+export { deleteTransaction as delete };

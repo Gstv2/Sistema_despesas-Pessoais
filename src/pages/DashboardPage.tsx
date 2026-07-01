@@ -1,23 +1,27 @@
-import { useDashboard } from '../hooks/useDashboard';
 import SummaryCards from '../features/dashboard/SummaryCards';
-import ErrorMessage from '../components/ui/ErrorMessage';
+import { useTransactions } from '../hooks/useTransactions';
+import { useDashboard } from '../hooks/useDashboard';
+import { ErrorMessage } from '../components/ui/ErrorMessage';
 
 const DashboardPage = () => {
-  const { totalIncome, totalExpenses, totalTransactions, loading, error } = useDashboard();
+  const { transactions, error, refresh } = useTransactions();
+  const { totalIncome, totalExpenses, totalTransactions } = useDashboard(transactions);
 
-  if (loading) {
+  if (error) {
     return (
-      <div className="text-center py-12">
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">Dashboard</h1>
-        <p>Carregando...</p>
+      <div className="p-4 md:p-8">
+        <ErrorMessage message={error} onRetry={refresh} />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
-      {error && <ErrorMessage message={error} />}
+    <div className="p-4 md:p-8 space-y-8">
+      <div>
+        <h1 className="text-3xl font-extrabold text-slate-800 mb-2">Dashboard</h1>
+        <p className="text-slate-500">Visão geral das suas finanças pessoais</p>
+      </div>
+      
       <SummaryCards
         totalIncome={totalIncome}
         totalExpenses={totalExpenses}

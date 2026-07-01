@@ -1,113 +1,72 @@
-import { useEffect, useState } from 'react';
-import { Plus } from 'lucide-react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import IncomeForm from '../features/income/IncomeForm';
 import IncomeList from '../features/income/IncomeList';
-import { transactionService } from '../services/transactionService';
-import ErrorMessage from '../components/ui/ErrorMessage';
-import type { Transaction, CreateTransaction, UpdateTransaction } from '../types/transaction';
+import { useTransactions } from '../hooks/useTransactions';
+import * as transactionService from '../services/transactionService';
+import type { CreateTransaction, Transaction } from '../types/transaction';
+import { ErrorMessage } from '../components/ui/ErrorMessage';
 
 const IncomePage = () => {
-  const [incomes, setIncomes] = useState<Transaction[]>([]);
-  const [showForm, setShowForm] = useState(false);
-  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { transactions, loading, error, refresh } = useTransactions();
+  
+  const editId = searchParams.get('edit');
+  const incomeTransactions = transactions.filter(t => t.type === 'income');
+  const editingTransaction = editId 
+    ? transactions.find(t => t.id === editId) 
+    : undefined;
 
-  useEffect(() => {
-    loadIncomes();
-  }, []);
-
-  const loadIncomes = async () => {
+  const handleSuccess = async (data: CreateTransaction) => {
     try {
-      setError(null);
-      const data = await transactionService.getAll();
-      setIncomes(data.filter(t => t.type === 'income'));
+      if (editId && editingTransaction) {
+        await transactionService.update(editId, { ...data, type: 'income' });
+      } else {
+        await transactionService.create({ ...data, type: 'income' });
+      }
+      await refresh();
+      navigate('/income');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao carregar as receitas');
-      console.error('Error loading incomes:', err);
-    } finally {
-      setLoading(false);
+      console.error(err);
     }
   };
 
-  const handleCreateIncome = async (data: CreateTransaction) => {
-    try {
-      setError(null);
-      await transactionService.create({ ...data, type: 'income' });
-      await loadIncomes();
-      setShowForm(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao criar a receita');
-      console.error('Error creating income:', err);
-    }
+  const handleEdit = (transaction: Transaction) => {
+    navigate(`/income?edit=${transaction.id}`);
   };
 
-  const handleEditIncome = async (transaction: Transaction) => {
-    setEditingTransaction(transaction);
-    setShowForm(true);
-  };
-
-  const handleUpdateIncome = async (data: UpdateTransaction) => {
-    if (!editingTransaction) return;
+  const handleDelete = async (id: string) => {
+    if (!confirm('Deseja realmente excluir essa receita?')) return;
     try {
-      setError(null);
-      await transactionService.update(editingTransaction.id, data);
-      await loadIncomes();
-      setShowForm(false);
-      setEditingTransaction(null);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao atualizar a receita');
-      console.error('Error updating income:', err);
-    }
-  };
-
-  const handleDeleteIncome = async (id: string) => {
-    if (!confirm('Deseja excluir esta receita?')) return;
-    try {
-      setError(null);
       await transactionService.delete(id);
-      await loadIncomes();
+      await refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao excluir a receita');
-      console.error('Error deleting income:', err);
+      console.error(err);
     }
   };
+
+  if (error) {
+    return (
+      <div className="p-4 md:p-8">
+        <ErrorMessage message={error} onRetry={refresh} />
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-800">Receitas</h1>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 flex items-center space-x-2"
-        >
-          <Plus size={20} />
-          <span>Nova Receita</span>
-        </button>
+    <div className="p-4 md:p-8 space-y-6">
+      <div>
+        <h1 className="text-3xl font-extrabold text-slate-800 mb-2">Receitas</h1>
+        <p className="text-slate-500">Gerencie suas receitas pessoais</p>
       </div>
-
-      {error && <ErrorMessage message={error} />}
-
-      {showForm && (
-        <IncomeForm
-          transaction={editingTransaction || undefined}
-          onSubmit={editingTransaction ? handleUpdateIncome : handleCreateIncome}
-          onCancel={() => {
-            setShowForm(false);
-            setEditingTransaction(null);
-          }}
-        />
-      )}
-
-      {loading ? (
-        <div className="text-center py-12">Carregando...</div>
-      ) : (
-        <IncomeList
-          incomes={incomes}
-          onEdit={handleEditIncome}
-          onDelete={handleDeleteIncome}
-        />
-      )}
+      
+      <IncomeForm onSuccess={handleSuccess} initialData={editingTransaction} />
+      <IncomeList
+        incomes={incomeTransactions}
+        loading={loading}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
     </div>
   );
 };

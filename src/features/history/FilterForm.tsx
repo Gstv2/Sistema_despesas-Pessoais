@@ -1,112 +1,136 @@
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import type { FilterOptions } from './TransactionList';
+import { Filter, X } from 'lucide-react';
 
 interface FilterFormProps {
   onFilter: (filters: FilterOptions) => void;
+  onClear: () => void;
 }
 
-interface FilterOptions {
-  startDate: string;
-  endDate: string;
-  category: string;
-  type: string;
-  paymentMethod: string;
-}
+const FilterForm = ({ onFilter, onClear }: FilterFormProps) => {
+  const { control, handleSubmit, reset } = useForm<FilterOptions>();
 
-const FilterForm = ({ onFilter }: FilterFormProps) => {
-  const { control, handleSubmit, reset } = useForm<FilterOptions>({
-    defaultValues: {
-      startDate: '',
-      endDate: '',
-      category: '',
-      type: '',
-      paymentMethod: '',
-    },
-  });
+  const categories = [
+    'Alimentação',
+    'Transporte',
+    'Moradia',
+    'Saúde',
+    'Educação',
+    'Lazer',
+    'Salário',
+    'Investimentos',
+    'Outros',
+  ];
+
+  const onSubmit = (data: FilterOptions) => {
+    onFilter(data);
+  };
+
+  const handleClear = () => {
+    reset();
+    onClear();
+  };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-lg font-bold mb-4">Filtrar Movimentações</h2>
-      <form onSubmit={handleSubmit(onFilter)} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Data Início</label>
-          <Controller
-            name="startDate"
-            control={control}
-            render={({ field }) => <input type="date" {...field} className="w-full border border-gray-300 rounded-md px-3 py-2" />}
-          />
+    <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="bg-violet-100 p-3 rounded-2xl">
+            <Filter className="text-violet-600" size={24} />
+          </div>
+          <h3 className="text-xl font-bold text-slate-800">Filtros</h3>
         </div>
+        <button
+          onClick={handleClear}
+          className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 transition-colors"
+        >
+          <X size={16} />
+          Limpar
+        </button>
+      </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Data Fim</label>
-          <Controller
-            name="endDate"
-            control={control}
-            render={({ field }) => <input type="date" {...field} className="w-full border border-gray-300 rounded-md px-3 py-2" />}
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
-          <Controller
-            name="category"
-            control={control}
-            render={({ field }) => (
-              <select {...field} className="w-full border border-gray-300 rounded-md px-3 py-2">
-                <option value="">Todas</option>
-                <option value="Alimentação">Alimentação</option>
-                <option value="Transporte">Transporte</option>
-                <option value="Moradia">Moradia</option>
-                <option value="Saúde">Saúde</option>
-                <option value="Educação">Educação</option>
-                <option value="Lazer">Lazer</option>
-                <option value="Salário">Salário</option>
-                <option value="Investimentos">Investimentos</option>
-                <option value="Outros">Outros</option>
-              </select>
-            )}
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
+      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Type */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700">Tipo</label>
           <Controller
             name="type"
             control={control}
             render={({ field }) => (
-              <select {...field} className="w-full border border-gray-300 rounded-md px-3 py-2">
+              <select
+                className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition-all"
+                {...field}
+              >
                 <option value="">Todos</option>
-                <option value="income">Receita</option>
-                <option value="expense">Despesa</option>
+                <option value="income">Receitas</option>
+                <option value="expense">Despesas</option>
               </select>
             )}
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Forma de Pagamento</label>
+        {/* Category */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700">Categoria</label>
           <Controller
-            name="paymentMethod"
+            name="category"
             control={control}
-            render={({ field }) => <input type="text" {...field} className="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Buscar..." />}
+            render={({ field }) => (
+              <select
+                className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition-all"
+                {...field}
+              >
+                <option value="">Todas</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            )}
           />
         </div>
 
-        <div className="md:col-span-2 lg:col-span-3 xl:col-span-5 flex space-x-2">
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-            Filtrar
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              reset();
-              onFilter({ startDate: '', endDate: '', category: '', type: '', paymentMethod: '' });
-            }}
-            className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400"
-          >
-            Limpar
-          </button>
+        {/* Start Date */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700">Data Inicial</label>
+          <Controller
+            name="startDate"
+            control={control}
+            render={({ field }) => (
+              <input
+                type="date"
+                className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition-all"
+                {...field}
+              />
+            )}
+          />
+        </div>
+
+        {/* End Date */}
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700">Data Final</label>
+          <Controller
+            name="endDate"
+            control={control}
+            render={({ field }) => (
+              <input
+                type="date"
+                className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition-all"
+                {...field}
+              />
+            )}
+          />
         </div>
       </form>
+
+      <div className="mt-6 flex justify-end">
+        <button
+          type="submit"
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold rounded-2xl hover:from-violet-600 hover:to-purple-700 focus:ring-4 focus:ring-violet-200 transition-all"
+        >
+          <Filter size={18} />
+          Aplicar Filtros
+        </button>
+      </div>
     </div>
   );
 };

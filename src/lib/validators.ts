@@ -1,8 +1,6 @@
 import { z } from 'zod';
 
-const transactionTypeSchema = z.enum(['income', 'expense']);
-
-const transactionCategorySchema = z.enum([
+const transactionCategories = [
   'Alimentação',
   'Transporte',
   'Moradia',
@@ -12,15 +10,14 @@ const transactionCategorySchema = z.enum([
   'Salário',
   'Investimentos',
   'Outros',
-]);
+] as const;
 
 export const createTransactionSchema = z.object({
-  type: transactionTypeSchema,
-  value: z.number().positive('Valor deve ser positivo'),
-  category: transactionCategorySchema,
+  value: z.number().positive('O valor deve ser maior que zero'),
+  category: z.enum(transactionCategories, {
+    required_error: 'Por favor, selecione uma categoria',
+  }),
   description: z.string().optional(),
   payment_method: z.string().optional(),
-  transaction_date: z.coerce.date(),
+  transaction_date: z.string(),
 });
-
-export const updateTransactionSchema = createTransactionSchema.partial();
