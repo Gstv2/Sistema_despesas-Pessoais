@@ -36,7 +36,7 @@ const ExpensePage = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Deseja realmente excluir esta despesa?')) return;
+    if (!confirm('Deseja realmente excluir essa despesa?')) return;
     try {
       await transactionService.delete(id);
       await refresh();

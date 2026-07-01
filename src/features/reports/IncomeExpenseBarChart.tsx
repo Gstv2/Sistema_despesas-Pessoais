@@ -7,7 +7,7 @@ interface IncomeExpenseBarChartProps {
 
 const IncomeExpenseBarChart = ({ transactions }: IncomeExpenseBarChartProps) => {
   const monthlyData = transactions.reduce((acc, t) => {
-    const date = new Date(t.transactionDate);
+    const date = new Date(t.transaction_date);
     const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
     const existing = acc.find(item => item.month === month);
     

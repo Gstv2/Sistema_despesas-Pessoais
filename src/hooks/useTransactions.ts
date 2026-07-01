@@ -34,9 +34,9 @@ export const useTransactions = () => {
   const filteredTransactions = transactions.filter(transaction => {
     if (filters.type && transaction.type !== filters.type) return false;
     if (filters.category && transaction.category !== filters.category) return false;
-    if (filters.startDate && new Date(transaction.transactionDate) < new Date(filters.startDate)) return false;
-    if (filters.endDate && new Date(transaction.transactionDate) > new Date(filters.endDate)) return false;
-    if (filters.paymentMethod && !transaction.paymentMethod?.includes(filters.paymentMethod)) return false;
+    if (filters.startDate && new Date(transaction.transaction_date) < new Date(filters.startDate)) return false;
+    if (filters.endDate && new Date(transaction.transaction_date) > new Date(filters.endDate)) return false;
+    if (filters.payment_method && !transaction.payment_method?.includes(filters.payment_method)) return false;
     return true;
   });
 

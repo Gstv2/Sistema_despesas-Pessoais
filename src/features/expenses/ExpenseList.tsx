@@ -58,12 +58,12 @@ const ExpenseList = ({ expenses, onEdit, onDelete, loading }: ExpenseListProps) 
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar size={14} />
-                    <span>{formatDate(expense.transactionDate)}</span>
+                    <span>{formatDate(expense.transaction_date)}</span>
                   </div>
-                  {expense.paymentMethod && (
+                  {expense.payment_method && (
                     <div className="flex items-center gap-1">
                       <CreditCard size={14} />
-                      <span>{expense.paymentMethod}</span>
+                      <span>{expense.payment_method}</span>
                     </div>
                   )}
                 </div>

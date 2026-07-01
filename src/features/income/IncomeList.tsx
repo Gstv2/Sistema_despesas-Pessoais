@@ -58,12 +58,12 @@ const IncomeList = ({ incomes, onEdit, onDelete, loading }: IncomeListProps) => 
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar size={14} />
-                    <span>{formatDate(income.transactionDate)}</span>
+                    <span>{formatDate(income.transaction_date)}</span>
                   </div>
-                  {income.paymentMethod && (
+                  {income.payment_method && (
                     <div className="flex items-center gap-1">
                       <CreditCard size={14} />
-                      <span>{income.paymentMethod}</span>
+                      <span>{income.payment_method}</span>
                     </div>
                   )}
                 </div>

@@ -36,7 +36,7 @@ const IncomePage = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Deseja realmente excluir esta receita?')) return;
+    if (!confirm('Deseja realmente excluir essa receita?')) return;
     try {
       await transactionService.delete(id);
       await refresh();

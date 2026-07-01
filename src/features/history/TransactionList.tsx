@@ -7,7 +7,7 @@ export interface FilterOptions {
   category?: string;
   startDate?: string;
   endDate?: string;
-  paymentMethod?: string;
+  payment_method?: string;
 }
 
 interface TransactionListProps {
@@ -69,12 +69,12 @@ const TransactionList = ({ transactions, loading, onEdit, onDelete }: Transactio
                 </div>
                 <div className="flex items-center gap-1">
                   <Calendar size={14} />
-                  <span>{formatDate(transaction.transactionDate)}</span>
+                  <span>{formatDate(transaction.transaction_date)}</span>
                 </div>
-                {transaction.paymentMethod && (
+                {transaction.payment_method && (
                   <div className="flex items-center gap-1">
                     <CreditCard size={14} />
-                    <span>{transaction.paymentMethod}</span>
+                    <span>{transaction.payment_method}</span>
                   </div>
                 )}
               </div>

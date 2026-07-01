@@ -10,7 +10,7 @@ const mockTransactions: Transaction[] = [
     category: 'Salário',
     description: 'Salário mensal',
     payment_method: 'Transferência',
-    transaction_date: new Date().toISOString(),
+    transaction_date: new Date().toISOString().split('T')[0],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
@@ -18,10 +18,10 @@ const mockTransactions: Transaction[] = [
     id: '2',
     type: 'expense',
     value: 1200,
-    category: 'Aluguel',
+    category: 'Moradia',
     description: 'Aluguel apartamento',
     payment_method: 'Boleto',
-    transaction_date: new Date().toISOString(),
+    transaction_date: new Date().toISOString().split('T')[0],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
@@ -50,7 +50,7 @@ export const create = async (transaction: CreateTransaction): Promise<Transactio
       id: Date.now().toString(),
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    };
+    } as Transaction;
     mockTransactions.unshift(newTransaction);
     return newTransaction;
   }

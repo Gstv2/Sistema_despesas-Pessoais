@@ -1,4 +1,4 @@
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createTransactionSchema } from '../../lib/validators';
 import type { CreateTransaction, TransactionCategory, Transaction } from '../../types/transaction';
@@ -12,7 +12,7 @@ const categories: TransactionCategory[] = [
 ];
 
 interface IncomeFormProps {
-  onSuccess: () => void;
+  onSuccess: (data: CreateTransaction) => void;
   initialData?: Transaction;
 }
 
@@ -27,21 +27,26 @@ const IncomeForm = ({ onSuccess, initialData }: IncomeFormProps) => {
     reset,
   } = useForm<CreateTransaction>({
     resolver: zodResolver(createTransactionSchema),
-    defaultValues: initialData || {
+    defaultValues: initialData ? {
+      value: initialData.value,
+      category: initialData.category,
+      description: initialData.description,
+      payment_method: initialData.payment_method,
+      transaction_date: initialData.transaction_date,
+    } : {
       type: 'income',
       value: 0,
       category: 'Outros',
       description: '',
-      paymentMethod: '',
-      transactionDate: new Date().toISOString().split('T')[0],
+      payment_method: '',
+      transaction_date: new Date().toISOString().split('T')[0],
     },
   });
 
-  const onSubmit = async (data: CreateTransaction) => {
+  const onSubmit: SubmitHandler<CreateTransaction> = async (data) => {
     try {
       const transactionData = { ...data, type: 'income' };
-      console.log('Submitting income:', transactionData);
-      onSuccess();
+      onSuccess(transactionData as CreateTransaction);
       reset();
     } catch (error) {
       console.error('Error submitting income:', error);
@@ -106,7 +111,7 @@ const IncomeForm = ({ onSuccess, initialData }: IncomeFormProps) => {
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-700">Data</label>
             <Controller
-              name="transactionDate"
+              name="transaction_date"
               control={control}
               render={({ field }) => (
                 <input
@@ -122,7 +127,7 @@ const IncomeForm = ({ onSuccess, initialData }: IncomeFormProps) => {
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-700">Forma de Recebimento</label>
             <Controller
-              name="paymentMethod"
+              name="payment_method"
               control={control}
               render={({ field }) => (
                 <input
