@@ -4,7 +4,7 @@ import { useDashboard } from '../hooks/useDashboard';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
 
 const DashboardPage = () => {
-  const { transactions, loading, error, refresh } = useTransactions();
+  const { transactions, error, refresh } = useTransactions();
   const { totalIncome, totalExpenses, totalTransactions } = useDashboard(transactions);
 
   if (error) {
