@@ -29,6 +29,13 @@ const mockTransactions: Transaction[] = [
 
 const useMockData = !import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === 'your-supabase-url';
 
+// Função auxiliar para obter o usuário atual
+const getCurrentUserId = async (): Promise<string | null> => {
+  if (useMockData) return null;
+  const { data } = await supabase.auth.getUser();
+  return data.user?.id || null;
+};
+
 export const getAll = async (): Promise<Transaction[]> => {
   if (useMockData) {
     return mockTransactions;
@@ -55,9 +62,14 @@ export const create = async (transaction: CreateTransaction): Promise<Transactio
     return newTransaction;
   }
 
+  const userId = await getCurrentUserId();
+  if (!userId) {
+    throw new Error('Usuário não autenticado');
+  }
+
   const { data, error } = await supabase
     .from('transactions')
-    .insert([transaction])
+    .insert([{ ...transaction, user_id: userId }])
     .select()
     .single();
 

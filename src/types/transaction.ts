@@ -13,6 +13,7 @@ export type TransactionCategory =
 
 export interface Transaction {
   id: string;
+  user_id?: string;
   type: TransactionType;
   value: number;
   category: TransactionCategory;
@@ -30,6 +31,7 @@ export interface CreateTransaction {
   description?: string;
   payment_method?: string;
   transaction_date: string;
+  user_id?: string;
 }
 
 export interface UpdateTransaction {

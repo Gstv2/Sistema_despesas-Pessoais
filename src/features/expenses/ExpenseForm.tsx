@@ -39,7 +39,6 @@ const ExpenseForm = ({ onSuccess, initialData }: ExpenseFormProps) => {
       transaction_date: initialData.transaction_date,
     } : {
       type: 'expense',
-      value: 0,
       category: 'Outros',
       description: '',
       payment_method: '',
@@ -79,13 +78,15 @@ const ExpenseForm = ({ onSuccess, initialData }: ExpenseFormProps) => {
             <Controller
               name="value"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, name } }) => (
                 <input
                   type="number"
-                  step="0.01"
                   placeholder="0.00"
-                  className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition-all"
-                  {...field}
+                  name={name}
+                  onChange={(e) =>
+                    onChange(e.target.value === "" ? undefined : Number(e.target.value))
+                  }
+                  className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
                 />
               )}
             />
